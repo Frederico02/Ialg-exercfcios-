@@ -1,26 +1,43 @@
 #include <iostream>
-#include <cmath>
+#include <cstring>
 using namespace std;
 int main () {
-    int v1[10];
-    for(int i = 0; i < 10; ++i) {
-        cin >> v1[i];
-    }
-    int v2[5];
-    for (int i = 0; i < 5; ++i) {
-        cin >> v2[i];
-    }
-    int divisores = 0;
-    int u;
-    for (int i = 0; i < 10; ++i){
-        for (u = 0; u < 5; ++u){
-            if (v1[i] % v2[u] == 0){
-                ++divisores;
+    char texto1[255];
+    cin >> texto1;
+    char texto2[255];
+    cin >> texto2;
+    int ultimo = int (strlen(texto2));
+    int i = 0;
+    int u = 0;
+    int posI;
+    bool igual = false;
+    bool primeiro = false;
+    bool acabou = false;
+    while((texto1[i] != 0) and (acabou == false)){
+        if(texto1[i] == texto2[u]){
+            if(primeiro == false){
+                posI = i;
+                primeiro = true;
+            }
+            ++u;
+            igual = true;
+        } else {
+            if(primeiro){
+                if(u != ultimo){
+                    primeiro = false;
+                    u = 0;
+                    igual = false;
+                    i = posI;
+                } else {
+                    acabou = true;                }
             }
         }
-        cout << v1[i] << " " << divisores << endl;
-        divisores = 0;
-        u = 0;
+        ++i;
+    }
+    if(igual){
+        cout << posI << endl;
+    } else {
+        cout << -1 << endl;
     }
     return 0;
 }
